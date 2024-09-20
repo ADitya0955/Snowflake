@@ -1,0 +1,19 @@
+create or replace masking policy pii_masking1 as(input string)
+returns string->
+case when current_role() in ('ACCOUNTADMIN') THEN input
+else 'masked'
+end;
+drop masking policy pii_masking
+
+ALTER TABLE IF EXISTS OUR_FIRST_DB.PUBLIC.MOVIE_TITLES MODIFY COLUMN director UNSET MASKING POLICY pii_masking 
+ 
+
+alter table if exists OUR_FIRST_DB.PUBLIC.MOVIE_TITLES  modify column director set masking policy pii_masking1;
+
+select * from OUR_FIRST_DB.PUBLIC.MOVIE_TITLES limit 10;
+
+create or replace masking policy STRING_MASK as (val string) returns string ->
+  case
+    when current_role() in ('DATAENGINEER') then val
+    else '*********'
+  end;

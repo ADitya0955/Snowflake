@@ -1,0 +1,18 @@
+describe stage MANAGE_DB.external_stages.csv_folder;
+
+create or replace external table manage_db.public.ext_table
+location=@MANAGE_DB.external_stages.csv_folder
+file_format=MANAGE_DB.FILE_FORMATS.CSV_FILEFORMAT,
+auto_refresh=TRUE
+pattern='.*titles.*';
+
+select distinct metadata$filename from manage_db.public.ext_table;
+ALTER EXTERNAL TABLE manage_db.public.ext_table REFRESH;
+
+SHOW PIPES;
+
+show external tables;
+
+select top 10 $1:c1::varchar collate 'en-ci',* from manage_db.public.ext_table;
+
+describe external table manage_db.public.ext_table;
