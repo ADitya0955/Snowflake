@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: final_title
+    columns:
+      - name: show_id
+        tests:
+          - not_null
+          - string_not_empty
+          
+     

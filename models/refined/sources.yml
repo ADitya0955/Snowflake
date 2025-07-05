@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+
+  - name: raw_title
+    database: MANAGE_DB
+    schema: public
+    tables:
+      - name: EXT_TABLE1
+  
